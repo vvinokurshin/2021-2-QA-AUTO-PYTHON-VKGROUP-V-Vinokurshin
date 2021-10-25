@@ -2,37 +2,17 @@ import pytest
 from base import BaseCase
 from ui.locators import basic_locators
 from ui.url import url
-from utils import creds
 from utils import utils
 
+@pytest.mark.usefixtures('login')
+@pytest.mark.UI
 class Test_UI(BaseCase):
-
-    def test_title(self):
-        assert "myTarget" in self.driver.title
-
-    def test_login_correct(self):
-        self.login_page.login(creds.MY_EMAIL, creds.MY_PASSWORD)
-        assert self.driver.current_url == url.DASHBOARD_URL
-    
-    @pytest.mark.parametrize(
-        'email, password', 
-        [
-            pytest.param(
-                'valera_valera03@mail.ru', 'hello'
-            ),
-            pytest.param(
-                'hello', 'vktesters'
-            )
-        ]
-    )
-    def test_login_incorrect(self, email, password):
-        self.login_page.login(email, password)
-        assert self.driver.current_url != url.DASHBOARD_URL
+    def test_login(self):
+        assert self.driver.current_url.startswith(url.DASHBOARD_URL)
 
     def test_logout(self):
-        self.login_page.login(creds.MY_EMAIL, creds.MY_PASSWORD)
         self.main_page.logout()
-        assert self.driver.current_url == url.MAIN_PAGE_URL
+        assert self.driver.current_url.startswith(url.MAIN_PAGE_URL)
 
     @pytest.mark.parametrize(
         'locator_field, url', 
@@ -47,12 +27,10 @@ class Test_UI(BaseCase):
         ]
     )
     def test_move_to(self, locator_field, url):
-        self.login_page.login(creds.MY_EMAIL, creds.MY_PASSWORD)
         self.main_page.move_to(locator_field)
-        assert url in self.driver.current_url
-
+        assert self.driver.current_url.startswith(url)
+        
     def test_edit_info(self):
-        self.login_page.login(creds.MY_EMAIL, creds.MY_PASSWORD)
         self.main_page.move_to(basic_locators.MainPageLocators.PROFILE_LOCATOR)
 
         name = utils.get_random_name()

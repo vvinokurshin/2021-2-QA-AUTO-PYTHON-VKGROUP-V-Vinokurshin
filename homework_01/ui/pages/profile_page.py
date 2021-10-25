@@ -6,10 +6,6 @@ class ProfilePage(BasePage):
     locators = ProfilePageLocators()
 
     def edit_info(self, name, phone):
-        field = self.find(ProfilePageLocators.NAME_LOCATOR)
-        field.clear()
-        field.send_keys(name)
-        field = self.find(ProfilePageLocators.PHONE_LOCATOR)
-        field.clear()
-        field.send_keys(phone)
+        self.fill_field(ProfilePageLocators.NAME_LOCATOR, name)
+        self.fill_field(ProfilePageLocators.PHONE_LOCATOR, phone)
         self.click(ProfilePageLocators.SUBMIT_LOCATOR)

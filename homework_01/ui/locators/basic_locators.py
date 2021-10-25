@@ -8,7 +8,7 @@ class LoginPageLocators:
 
 class MainPageLocators:
     MENU_LOCATOR = (By.XPATH, "//div[contains(@class, 'right-module-rightButton')]")
-    LOGOUT_LOCATOR = (By.LINK_TEXT, "ВЫЙТИ")
+    LOGOUT_LOCATOR = (By.XPATH, "//a[contains(@href, '/logout')]")
     PROFILE_LOCATOR = (By.XPATH, "//a[contains(@class, 'center-module-profile')]")
     TOOLS_LOCATOR = (By.XPATH, "//a[contains(@class, 'center-module-tools')]")
 
