@@ -29,7 +29,7 @@ class Test_UI(BaseCase):
     def test_move_to(self, locator_field, url):
         self.main_page.move_to(locator_field)
         assert self.driver.current_url.startswith(url)
-        
+
     def test_edit_info(self):
         self.main_page.move_to(basic_locators.MainPageLocators.PROFILE_LOCATOR)
 
