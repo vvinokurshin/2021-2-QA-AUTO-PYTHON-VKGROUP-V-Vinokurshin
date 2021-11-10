@@ -6,7 +6,7 @@ class LoginPage(BasePage):
 
     url = 'https://target.my.com/'
 
-    def login(self, email, password):
+    def login(self, email, password, authorize=True):
         self.logger.debug("Startint authorization")
         
         self.click(LoginPageLocators.LOGIN_LOCATOR)
@@ -15,5 +15,10 @@ class LoginPage(BasePage):
         self.click(LoginPageLocators.ENTER_LOGIN_LOCATOR)
 
         self.logger.debug("Authorization data has been successfully entered")
-
-        return CampaignPage(self.driver)
+     
+        if authorize:
+            return CampaignPage(self.driver)
+        elif self.driver.current_url.startswith(CampaignPage.url):
+            return False
+        else:
+            return True       

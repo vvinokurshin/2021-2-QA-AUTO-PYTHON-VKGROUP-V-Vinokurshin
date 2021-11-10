@@ -39,6 +39,10 @@ class BasePage(object):
     def find(self, locator, timeout=None):
         return self.wait(timeout).until(ec.presence_of_element_located(locator))
 
+    def find_by_parent(self, parent_locator, locator):
+        parent = self.find(parent_locator)
+        return parent.find_element(*locator)
+
     def find_list(self, locator, timeout=None):
         return self.wait(timeout).until(ec.presence_of_all_elements_located(locator))
 

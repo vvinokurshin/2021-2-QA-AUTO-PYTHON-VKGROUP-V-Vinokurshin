@@ -1,6 +1,7 @@
 from ui.pages.audiences_page import AudiencesPage
 from ui.pages.base_page import BasePage
-from ui.locators.basic_locators import CampaignPageLocators
+from ui.locators.basic_locators import AudiencesPageLocators, CampaignPageLocators
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 from selenium.webdriver.common.by import By
@@ -42,14 +43,12 @@ class CampaignPage(BasePage):
 
         self.fill_field(CampaignPageLocators.URL_LOCATOR, url)
     
-        import time 
-        time.sleep(3) 
+        name_field = self.wait(5).until(ec.element_to_be_clickable(CampaignPageLocators.NAME_CAMPAIGN_LOCATOR))
+        name_field.clear()
+        name_field.send_keys(name)
 
-        self.fill_field(CampaignPageLocators.NAME_CAMPAIGN_LOCATOR, name)
         self.click(CampaignPageLocators.DELETE_REGION_LOCATOR)
-        geo = self.find(CampaignPageLocators.GEOGRAFY_LOCATOR)
-        field = geo.find_element(By.XPATH, ".//input[contains(@class, 'suggester-module-searchInput')]")
-        field.send_keys(region)
+        self.find_by_parent(CampaignPageLocators.GEOGRAFY_LOCATOR, CampaignPageLocators.REGION_LOCATOR).send_keys(region)
         self.click(CampaignPageLocators.ADD_REGION_LOCATOR)
 
         self.click(CampaignPageLocators.BANNER_LOCATOR)
@@ -70,7 +69,7 @@ class CampaignPage(BasePage):
         for i in range(len(campaings)):
             try: 
                 campaings[i].find_element(By.XPATH, f'.//a[@title="{name}"]')
-                campaings[i].find_element(By.XPATH, ".//input[@type='checkbox']").click()
+                campaings[i].find_element(*CampaignPageLocators.CHECKBOX_LOCATOR).click()
                 break
 
             except NoSuchElementException:
@@ -81,7 +80,4 @@ class CampaignPage(BasePage):
         self.click(CampaignPageLocators.DELETE_CAMPAIGN_LOCATOR)
 
         self.logger.debug('Campaign successfully removed')
-   
-
-
-        
+     

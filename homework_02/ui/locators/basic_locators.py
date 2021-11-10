@@ -26,6 +26,7 @@ class CampaignPageLocators:
     CREATE_CAMPAIGN_LOCATOR = (By.XPATH, "//div[contains(@class, 'js-save-button-wrap')]")
 
     CAMPAINGS_LOCATOR = (By.XPATH, "//div[contains(@class, 'main-module-CellFirst')]")
+    CHECKBOX_LOCATOR = (By.XPATH, ".//input[@type='checkbox']")
     ACTIONS_LOCATOR = (By.XPATH, "//div[contains(@class, 'tableControls-module-selectItem')]")
     DELETE_CAMPAIGN_LOCATOR = (By.XPATH, "//li[@data-id='8']")
 
@@ -34,11 +35,12 @@ class CampaignPageLocators:
 class AudiencesPageLocators():
     ADD_SEGMENT_LOCATOR = (By.XPATH, "//a[contains(@href, '/segments/segments_list/new/')]")
 
+    APP_LOCATOR = (By.XPATH, "//div[contains(@class, 'adding-segments-item')]")
     CHECKBOX_LOCATOR = (By.XPATH, "//input[contains(@class,'adding-segments-source__checkbox js-main-source-checkbox')]")
     CREATE_SEGMENT_LOCATOR = (By.XPATH, "//div[@class='adding-segments-modal__btn-wrap js-add-button']//button[@class='button button_submit']")
 
     NAME_SEGMENT_LOCATOR = (By.XPATH, "//div[contains(@class,'input input_create-segment-form')]//input[contains(@type,'text')]")
-    SUBMIT_LOCATOR = (By.XPATH, "//button[@class='button button_submit']")
+    SUBMIT_LOCATOR = (By.XPATH, "//button[contains(@class, 'button_submit')]")
 
     SEGMENTS_LOCATOR = (By.XPATH, "//div[contains(@class, 'cells-module-nameCell')]")
     CHECKBOXES_LOCATOR = (By.XPATH, "//input[@type='checkbox']")

@@ -14,7 +14,6 @@ from utils import utils
 class TestNegative(BaseCase):
     authorize = False
 
-    # @pytest.mark.skip("DONE")
     @pytest.mark.parametrize(
         'email, password', 
         [
@@ -29,16 +28,11 @@ class TestNegative(BaseCase):
     )
     def test_login_failed(self, email, password):
         login_page = LoginPage(self.driver)
-
-        try:
-            login_page.login(email, password)
-        except PageNotLoadedException:
-            pass
+        assert login_page.login(email, password, authorize=False)
 
 @pytest.mark.UI
 class TestPositive(BaseCase):
 
-    # @pytest.mark.skip("DONE")
     @allure.story('Creating campaign')
     def test_create_campaign(self, files_path):
         campaign_page = CampaignPage(self.driver)
@@ -46,21 +40,19 @@ class TestPositive(BaseCase):
 
         assert utils.object_exist(campaign_page, name)
 
-    # @pytest.mark.skip("DONE")
+        campaign_page.remove_campaign(name)
+
     @allure.story('Removing campaign')
     def test_remove_campaign(self, files_path):
         campaign_page = CampaignPage(self.driver)
 
-        with open(utils.get_full_name(files_path, 'campaign.txt')) as f:
-            lines = f.readlines()[1:2]
-            name = lines[0].strip()
+        name = campaign_page.create_campaign(utils.get_full_name(files_path, 'example.png'), files_path)
 
         campaign_page.remove_campaign(name)
         self.driver.refresh()
 
         assert not utils.object_exist(campaign_page, name)
 
-    # @pytest.mark.skip("DONE")
     @allure.story('Adding segment')
     def test_add_segment(self, files_path):
         campaign_page = CampaignPage(self.driver)
@@ -71,15 +63,15 @@ class TestPositive(BaseCase):
 
         assert utils.object_exist(audiences_page, name)
 
-    # @pytest.mark.skip("DONE")
+        audiences_page.remove_segment(name)
+
     @allure.story('Removing segment')
     def test_remove_segment(self, files_path):
         campaign_page = CampaignPage(self.driver)
         campaign_page.move_to_audiences(CampaignPageLocators.AUDIENCES_LOCATOR)
         audiences_page = AudiencesPage(self.driver)
 
-        with open(utils.get_full_name(files_path, 'segment.txt')) as f:
-            name = f.readline().strip()
+        name = audiences_page.create_segment(files_path)
             
         audiences_page.remove_segment(name)
         self.driver.refresh()

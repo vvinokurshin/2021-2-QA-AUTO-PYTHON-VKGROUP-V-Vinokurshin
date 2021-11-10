@@ -18,7 +18,8 @@ class AudiencesPage(BasePage):
             self.click(AudiencesPageLocators.ADD_SEGMENT_LOCATOR)
         except TimeoutException:
             self.click(AudiencesPageLocators.SUBMIT_LOCATOR)
-            
+
+        self.click(AudiencesPageLocators.APP_LOCATOR)    
         self.click(AudiencesPageLocators.CHECKBOX_LOCATOR)
         self.click(AudiencesPageLocators.CREATE_SEGMENT_LOCATOR)
 
