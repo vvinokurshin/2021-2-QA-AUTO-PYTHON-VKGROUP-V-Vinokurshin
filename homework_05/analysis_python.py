@@ -1,3 +1,5 @@
+import sys
+
 def in_array(element, array):
     for i in range(len(array)):
         if array[i] == element:
@@ -5,10 +7,11 @@ def in_array(element, array):
 
     return -1
 
+file_log_name = sys.argv[1]
 
 with open('res_python.txt', 'w') as f_out:
     f_out.write('Общее количество запросов:\n')
-    count = sum(1 for line in open('access.log', 'r')) 
+    count = sum(1 for line in open(file_log_name, 'r')) 
     f_out.write(str(count))
 
 
@@ -16,7 +19,7 @@ with open('res_python.txt', 'w') as f_out:
     methods = []
     count_methods = []
 
-    with open('access.log', 'r') as f_in:
+    with open(file_log_name, 'r') as f_in:
         for i in range(count):
             line = f_in.readline().split()[5:6][0].strip("\"")
             
@@ -43,7 +46,7 @@ with open('res_python.txt', 'w') as f_out:
     url = []
     count_url = []
 
-    with open('access.log', 'r') as f_in:
+    with open(file_log_name, 'r') as f_in:
         for i in range(count):
             line = f_in.readline().split()[6:7][0]
 
@@ -69,7 +72,7 @@ with open('res_python.txt', 'w') as f_out:
     code = []
     size = []
 
-    with open('access.log', 'r') as f_in:
+    with open(file_log_name, 'r') as f_in:
         for i in range(count):
             line = f_in.readline().split()
 
@@ -91,7 +94,7 @@ with open('res_python.txt', 'w') as f_out:
     ip = []
     count_requests = []
 
-    with open('access.log', 'r') as f_in:
+    with open(file_log_name, 'r') as f_in:
         for i in range(count):
             line = f_in.readline().split()
 
