@@ -2,8 +2,6 @@ import logging
 from urllib.parse import urljoin
 
 import requests
-import json
-
 
 logger = logging.getLogger('test')
 
@@ -31,11 +29,10 @@ class ApiClient:
         response = self.session.request(method=method, url=url,
                                         headers=headers, params=params,
                                         data=data)
-        response.raise_for_status()
 
         if json:
             return response.json()
-        return response.text
+        return response
 
     def get_token(self):
         headers = {
@@ -68,16 +65,15 @@ class ApiClient:
 
 
     def post_create_segment(self, title):
-        url = 'https://target.my.com/api/v2/remarketing/segments.json'
+        location = 'api/v2/remarketing/segments.json'
 
         params = {"fields": "relations__object_type,relations__object_id,"
                             "relations__params,relations_count,id,name,"
                             "pass_condition,created,campaign_ids,users,flags"
                   }
 
-        data = json.dumps({
+        data = {
             'name': title,
-            'logicType': "or",
             'pass_condition': 1,
             'relations': [
                 {
@@ -89,15 +85,13 @@ class ApiClient:
                     }
                 }
             ]
-        })
+        }
 
         headers = {
             "Content-Type": "application/json",
-            "Referer": "https://target.my.com/segments/segments_list/new",
             'X-CSRFToken': self.csrf_token
         }
-        response = self._request(method="POST", url=url,
-                                 data=data, params=params,
-                                 headers=headers, json=True)
+        response = self._request(method="POST", location=location, 
+                                 headers=headers, json=data)
         return response.get('id')
     
