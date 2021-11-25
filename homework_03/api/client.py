@@ -67,11 +67,6 @@ class ApiClient:
     def post_create_segment(self, title):
         location = 'api/v2/remarketing/segments.json'
 
-        params = {"fields": "relations__object_type,relations__object_id,"
-                            "relations__params,relations_count,id,name,"
-                            "pass_condition,created,campaign_ids,users,flags"
-                  }
-
         data = {
             'name': title,
             'pass_condition': 1,
