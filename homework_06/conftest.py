@@ -3,7 +3,7 @@ import pytest
 from mysql.client import MySQLClient
 
 def pytest_configure(config):
-    mysql_client = MySQLClient(user='root', password='pass', db_name='TEST_PYTHON')
+    mysql_client = MySQLClient(user='root', password='pass', db_name='TEST_SQL')
 
     if not hasattr(config, 'workerinput'):
         mysql_client.recreate_db()
